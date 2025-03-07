@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, ForeignKey, DateTime, func, Enum
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, func, Enum, String
 
 from db import Base
 
@@ -16,5 +16,6 @@ class MessageModel(Base):
     id:int = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     timestamp:datetime = Column(DateTime, default=func.now())
     sender_type = Column(Enum(SenderTypes), nullable=False)
-    _chat_id:int = Column(Integer, ForeignKey('chats.id'))
+    content:str = Column(String, nullable=False)
+    chat_id:int = Column(Integer, ForeignKey('chats.id'))
 

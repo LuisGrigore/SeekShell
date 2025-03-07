@@ -6,6 +6,9 @@ from app import console
 from models.chat_model import ChatModel
 from rich.table import Table
 
+from views.message_view import show_message
+
+
 def show_chat(chat:ChatModel) -> None:
     table: Table = Table(show_header=True, header_style="bold")
     table.add_column("Id", justify="center")
@@ -16,8 +19,10 @@ def show_chat(chat:ChatModel) -> None:
     table.add_row(str(chat.id), chat.name,
                             chat.description if chat.description is not None else "EMPTY",
                             chat.timestamp.strftime("%Y-%m-%d %H:%M:%S"))
-
     console.print(table)
+    list(map(lambda message: show_message(message), chat.messages))
+
+
 
 
 def show_chats(chat_list:List[ChatModel]) -> None:

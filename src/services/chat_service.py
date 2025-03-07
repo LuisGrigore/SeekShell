@@ -18,3 +18,7 @@ def get_chat_by_id(id:int) -> Result[ChatModel, ChatNotFoundFailure]:
         chat_datasource.update_last_opened(chat)
         return Success(chat)
     return Failure(ChatNotFoundFailure(id=id))
+
+
+def add_message_to_chat(urs_input):
+    return None

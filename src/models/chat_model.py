@@ -14,5 +14,5 @@ class ChatModel(Base):
     name:str = Column(String, nullable=False)
     description:str = Column(String, nullable=True)
     timestamp:datetime = Column(DateTime, default=func.now())
-    last_opened:datetime = Column(DateTime, nullable=True)
+    last_opened:datetime = Column(DateTime, nullable=True, default=func.now())
     messages = relationship(MessageModel, backref='chat', cascade="all, delete-orphan")
