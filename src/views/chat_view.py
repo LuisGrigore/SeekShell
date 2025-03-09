@@ -6,7 +6,8 @@ from app import console
 from models.chat_model import ChatModel
 from rich.table import Table
 
-from views.message_view import show_message
+from models.message_model import SenderTypes
+from views.message_view import show_message, show_message_md
 
 
 def show_chat(chat:ChatModel) -> None:
@@ -20,10 +21,7 @@ def show_chat(chat:ChatModel) -> None:
                             chat.description if chat.description is not None else "EMPTY",
                             chat.timestamp.strftime("%Y-%m-%d %H:%M:%S"))
     console.print(table)
-    list(map(lambda message: show_message(message), chat.messages))
-
-
-
+    list(map(lambda message: show_message(message) if message.sender_type == SenderTypes.USR else show_message_md(message), chat.messages))
 
 def show_chats(chat_list:List[ChatModel]) -> None:
     table:Table = Table(show_header=True,header_style="bold")

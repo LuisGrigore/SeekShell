@@ -1,7 +1,9 @@
+from typing import Optional
+
 from returns.result import Result, Success, Failure
 
 from datasources import chat_datasource, deep_seek_datasource
-from failures.chat_failures import ChatNotFoundFailure
+from failures.chat_failures import ChatNotFoundFailure, DeepSeekNoResponseFailure
 from models.chat_model import ChatModel
 from models.message_model import MessageModel
 
@@ -22,5 +24,9 @@ def get_chat_by_id(id:int) -> Result[ChatModel, ChatNotFoundFailure]:
     return Failure(ChatNotFoundFailure(id=id))
 
 
-def send_chat(chat:ChatModel) -> MessageModel:
-    deep_seek_datasource.send_chat(chat)
+def send_chat(chat:ChatModel) -> Result[str,DeepSeekNoResponseFailure]:
+    response:Optional[str] = deep_seek_datasource.send_chat(chat)
+
+    if response:
+        return Success(response)
+    return Failure(DeepSeekNoResponseFailure())

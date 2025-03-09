@@ -7,7 +7,7 @@ from models.chat_model import ChatModel
 from models.message_model import SenderTypes
 from services import chat_service, message_service
 from views.chat_view import show_chat, show_chat_str_input
-from views.message_view import show_message
+from views.message_view import show_message, show_message_md
 
 
 @dataclass
@@ -15,6 +15,8 @@ class ChatController:
     current_chat:Optional[ChatModel] = None
 
     def _command_loop(self):
+        def on_response_success(response:str):
+            manage_result(message_service.create_message(response, SenderTypes.BOT, self.current_chat.id), lambda mssg: show_message_md(mssg))
 
         while(True):
             usr_input:str = show_chat_str_input()
@@ -22,8 +24,7 @@ class ChatController:
                 break
             manage_result(message_service.create_message(usr_input, SenderTypes.USR, self.current_chat.id),
                           lambda mssg: show_message(mssg))
-            manage_result(chat_service.send_chat(self.current_chat),
-                          lambda mssg: show_message(mssg))
+            manage_result(chat_service.send_chat(self.current_chat), on_response_success)
 
     def _on_chat_success(self, chat:ChatModel) -> None:
         self.current_chat = chat

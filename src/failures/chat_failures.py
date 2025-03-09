@@ -30,3 +30,7 @@ class ChatNotFoundFailure(FailureBase):
             super().__init__(f"Chat with id {id} not found.")
         else:
             super().__init__(f"Chat not found.")
+
+class DeepSeekNoResponseFailure(FailureBase):
+    def __init__(self):
+        super().__init__("No response found.")
