@@ -18,3 +18,6 @@ def remove_current_api_key() -> ApiKeyModel:
         session.delete(current_key)
         session.commit()
     return current_key
+
+def get_current_key() -> ApiKeyModel:
+    return session.query(ApiKeyModel).first()

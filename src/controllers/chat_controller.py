@@ -25,7 +25,6 @@ class ChatController:
             manage_result(chat_service.send_chat(self.current_chat),
                           lambda mssg: show_message(mssg))
 
-
     def _on_chat_success(self, chat:ChatModel) -> None:
         self.current_chat = chat
         show_chat(chat)
@@ -44,4 +43,5 @@ def open_chat(id:int = typer.Argument(None, help="If blank, opens latest chat.")
     chat_controller:ChatController = ChatController()
     if id:
         chat_controller.open_chat_by_id(id)
+        return
     chat_controller.open_latest_chat()

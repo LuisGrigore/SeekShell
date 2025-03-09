@@ -1,8 +1,10 @@
 from returns.result import Result, Success, Failure
 
-from datasources import chat_datasource
+from datasources import chat_datasource, deep_seek_datasource
 from failures.chat_failures import ChatNotFoundFailure
 from models.chat_model import ChatModel
+from models.message_model import MessageModel
+
 
 
 def get_latest_chat() -> Result[ChatModel, ChatNotFoundFailure]:
@@ -20,5 +22,5 @@ def get_chat_by_id(id:int) -> Result[ChatModel, ChatNotFoundFailure]:
     return Failure(ChatNotFoundFailure(id=id))
 
 
-def send_chat(current_chat):
-    return None
+def send_chat(chat:ChatModel) -> MessageModel:
+    deep_seek_datasource.send_chat(chat)
