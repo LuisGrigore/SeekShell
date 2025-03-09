@@ -20,5 +20,5 @@ def get_chat_by_id(id:int) -> Result[ChatModel, ChatNotFoundFailure]:
     return Failure(ChatNotFoundFailure(id=id))
 
 
-def add_message_to_chat(urs_input):
+def send_chat(current_chat):
     return None

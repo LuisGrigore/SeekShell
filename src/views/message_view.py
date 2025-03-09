@@ -2,12 +2,12 @@ from app import console
 from models.message_model import MessageModel, SenderTypes
 
 
-def _get_sender_type_str(sender_type:SenderTypes):
+def _get_metadata_str(mssg:MessageModel):
     switch = {
-        SenderTypes.USR: "You",
-        SenderTypes.BOT: "SeekShell",
+        SenderTypes.USR: f"[bold magenta]({mssg.id})<You>[/bold magenta]",
+        SenderTypes.BOT: f"[bold blue]({mssg.id})<SeekShell>[bold blue]"
     }
-    return switch.get(sender_type)
+    return switch.get(mssg.sender_type)
 
 def show_message(mssg:MessageModel) -> None:
-    console.print(f"[bold magenta]{_get_sender_type_str(mssg.sender_type)}:[/bold magenta] {mssg.content}")
+    console.print(f"{_get_metadata_str(mssg)}: {mssg.content}")
