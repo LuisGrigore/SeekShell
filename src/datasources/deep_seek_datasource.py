@@ -17,9 +17,11 @@ def _map_sneder_type(sender_type:SenderTypes) -> Optional[str]:
     return None
 
 def _serialize_messages(mssgs:List[MessageModel]) -> str:
-    a = "[{role:user,content:"
-    b = "}]"
-    return f"{a}{mssgs[0].content}{b}"
+    result:str = "\n".join([mssg.content for mssg in mssgs])
+    print(result)
+    return json.dumps(
+
+    )
 
 def _serialize_chat(chat:ChatModel) -> str:
     return json.dumps({
@@ -29,7 +31,6 @@ def _serialize_chat(chat:ChatModel) -> str:
 
 
 def send_chat(chat: ChatModel) -> Optional[str]:
-    print(_serialize_chat(chat))
     response = requests.post(
         url=DEEP_SEEK_API_URL,
         headers={
@@ -37,14 +38,13 @@ def send_chat(chat: ChatModel) -> Optional[str]:
             "Content-Type": "application/json",
         },
         data=json.dumps({
-    "model": "deepseek/deepseek-r1-zero:free",
+    "model": "qwen/qwq-32b:free",
     "messages": [
-      {
-        "role": "user",
-        "content": "primero saludame como si fuera una celebrity y luego crea dos funciones en java que ordenen un array de formas distintas(usa markdown para formatear tu respuesta adecuadamente)"
-      }
-    ],
-
+            {
+                "role": "user",
+                "content": "\n".join([mssg.content for mssg in chat.messages])
+            }
+        ]
   })
     )
-    return response.json()["choices"][0]["message"]["reasoning"]
+    return response.json()["choices"][0]["message"]["content"]
