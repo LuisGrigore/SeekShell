@@ -13,14 +13,14 @@ def send_chat_stream(chat: ChatModel) -> Stream[ChatCompletionChunk]:
         messages=[
             {
                 "role": "system",
-                "content": "you are a helpful assistant."
+                "content": "You are a helpful assistant. Make sure to end all your messages with a new line. You will format your response in markdown format, use ir to be as legible and clear as possible, remember that you can use colors and make your text bold if needed. You will use emojis and any other visual aid on hand to be as clear as posible."
             },
             {
                 "role": "user",
                 "content": "\n".join([mssg.content for mssg in chat.messages]),
             }
         ],
-        model="llama-3.3-70b-versatile",
+        model="deepseek-r1-distill-llama-70b",
         temperature=0.5,
         max_completion_tokens=1024,
         top_p=1,

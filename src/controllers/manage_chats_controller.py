@@ -1,6 +1,7 @@
 from typing import Optional
 import typer
 from app import app
+from controllers.chat_controller import open_chat
 from manage_result import manage_result
 from services import manage_chat_service
 from views import chat_view
