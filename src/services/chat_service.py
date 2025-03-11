@@ -1,5 +1,7 @@
 from typing import Optional
 
+from groq import Stream
+from groq.types.chat import ChatCompletionChunk
 from returns.result import Result, Success, Failure
 
 from datasources import chat_datasource, deep_seek_datasource
@@ -24,9 +26,6 @@ def get_chat_by_id(id:int) -> Result[ChatModel, ChatNotFoundFailure]:
     return Failure(ChatNotFoundFailure(id=id))
 
 
-def send_chat(chat:ChatModel) -> Result[str,DeepSeekNoResponseFailure]:
-    response:Optional[str] = deep_seek_datasource.send_chat(chat)
-
-    if response:
-        return Success(response)
-    return Failure(DeepSeekNoResponseFailure())
+def send_chat(chat:ChatModel) -> Result[Stream[ChatCompletionChunk],DeepSeekNoResponseFailure]:
+    response:Stream[ChatCompletionChunk] = deep_seek_datasource.send_chat_stream(chat)
+    return Success(response)
