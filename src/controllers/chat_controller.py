@@ -96,3 +96,7 @@ def open_chat(id:int = typer.Argument(None, help="If blank, opens latest chat.")
         chat_controller.open_chat_by_id(id)
         return
     chat_controller.open_latest_chat()
+
+@app.command(name="debug-current", help="Sends ell the code inside the current directory(recursively), and tels deepseek to debug it.")
+def debug_current(id:int = typer.Argument(None, help="If blank, opens latest chat.")) -> None:
+    pass
