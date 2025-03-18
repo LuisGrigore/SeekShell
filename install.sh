@@ -26,7 +26,7 @@ pip install -r "$INSTALL_DIR/requirements.txt"
 echo "Creando acceso directo..."
 echo "#!/bin/bash
 source \"$VENV_DIR/bin/activate\"
-python \"$INSTALL_DIR/main.py\" \"\$@\"" | sudo tee /usr/local/bin/$EXECUTABLE_NAME > /dev/null
+python \"$INSTALL_DIR/src/main.py\" \"\$@\"" | sudo tee /usr/local/bin/$EXECUTABLE_NAME > /dev/null
 
 # Dar permisos de ejecución
 sudo chmod +x /usr/local/bin/$EXECUTABLE_NAME
