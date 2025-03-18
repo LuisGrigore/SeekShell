@@ -14,6 +14,7 @@ sudo apt update && sudo apt install -y python3 python3-venv git
 echo "Descargando la herramienta..."
 rm -rf "$INSTALL_DIR"
 git clone "$REPO_URL" "$INSTALL_DIR"
+mkdir "$INSTALL_DIR/persist"
 
 # Crear entorno virtual e instalar dependencias
 echo "Configurando el entorno virtual..."
