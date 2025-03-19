@@ -18,7 +18,7 @@ fi
 mkdir -p "$HOME/.local/bin"
 cat << EOF > "$BIN_PATH"
 #!/bin/bash
-$VENV_PATH/bin/python -m src "\$@"
+$VENV_PATH/bin/python -m seek_shell "\$@"
 EOF
 
 # Dar permisos de ejecución
