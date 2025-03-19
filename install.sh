@@ -2,7 +2,7 @@
 
 sudo apt install git
 
-git clone https://github.com/LuisGrigore/printf_temp.git $HOME/SeekShell
+git clone https://github.com/LuisGrigore/SeekShell.git $HOME/SeekShell
 
 # Definir variables
 APP_NAME="seek-shell"
