@@ -1,5 +1,9 @@
 #!/bin/bash
 
+sudo apt install git
+
+git clone https://github.com/LuisGrigore/printf_temp.git $HOME/SeekShell
+
 # Definir variables
 APP_NAME="seek-shell"
 VENV_PATH="$HOME/.seek-shell-env"
@@ -10,6 +14,9 @@ if [ ! -d "$VENV_PATH" ]; then
     python3 -m venv "$VENV_PATH"
 fi
 
+cp -r "$HOME/SeekShell"/* "$VENV_PATH"
+rm -rf "$HOME/SeekShell"
+
 # Instalar dependencias
 "$VENV_PATH/bin/pip" install --upgrade pip
 "$VENV_PATH/bin/pip" install -r requirements.txt
@@ -19,6 +26,7 @@ mkdir -p "$HOME/.local/bin"
 cat << EOF > "$BIN_PATH"
 #!/bin/bash
 $VENV_PATH/bin/python -m seek_shell "\$@"
+$VENV_PATH/bin/python $VENV_PATH/seek_shell/main.py "$@"
 EOF
 
 # Dar permisos de ejecución
