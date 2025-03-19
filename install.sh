@@ -18,7 +18,7 @@ cp -r "$HOME/SeekShell"/* "$VENV_PATH"
 
 # Instalar dependencias
 "$VENV_PATH/bin/pip" install --upgrade pip
-"$VENV_PATH/bin/pip" install -r requirements.txt
+"$VENV_PATH/bin/pip" install -r $VENV_PATH/requirements.txt
 
 # Crear el script ejecutable
 mkdir -p "$HOME/.local/bin"
