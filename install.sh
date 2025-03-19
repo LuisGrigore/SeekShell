@@ -1,36 +1,33 @@
 #!/bin/bash
 
-# Variables
-REPO_URL="https://github.com/LuisGrigore/SeekShell.git"  # Reemplázalo con tu repositorio real
-INSTALL_DIR="$HOME/.seek_shell"
-VENV_DIR="$INSTALL_DIR/venv"
-EXECUTABLE_NAME="seek_shell"  # Reemplázalo con el nombre de tu herramienta
+# Definir variables
+APP_NAME="seek-shell"
+VENV_PATH="$HOME/.seek-shell-env"
+BIN_PATH="$HOME/.local/bin/$APP_NAME"
 
-# Dependencias necesarias
-echo "Instalando dependencias necesarias..."
-sudo apt update && sudo apt install -y python3 python3-venv git
+# Crear entorno virtual si no existe
+if [ ! -d "$VENV_PATH" ]; then
+    python3 -m venv "$VENV_PATH"
+fi
 
-# Clonar el repositorio
-echo "Descargando la herramienta..."
-rm -rf "$INSTALL_DIR"
-git clone "$REPO_URL" "$INSTALL_DIR"
-chmod 755 $INSTALL_DIR
-mkdir "$INSTALL_DIR/persist"
+# Instalar dependencias
+"$VENV_PATH/bin/pip" install --upgrade pip
+"$VENV_PATH/bin/pip" install -r requirements.txt
 
-# Crear entorno virtual e instalar dependencias
-echo "Configurando el entorno virtual..."
-python3 -m venv "$VENV_DIR"
-source "$VENV_DIR/bin/activate"
-pip install --upgrade pip
-pip install -r "$INSTALL_DIR/requirements.txt"
-
-# Crear un alias para ejecutar la herramienta desde cualquier lugar
-echo "Creando acceso directo..."
-echo "#!/bin/bash
-source \"$VENV_DIR/bin/activate\"
-python \"$INSTALL_DIR/src/main.py\" \"\$@\"" | sudo tee /usr/local/bin/$EXECUTABLE_NAME > /dev/null
+# Crear el script ejecutable
+mkdir -p "$HOME/.local/bin"
+cat << EOF > "$BIN_PATH"
+#!/bin/bash
+$VENV_PATH/bin/python -m seek_shell "\$@"
+EOF
 
 # Dar permisos de ejecución
-sudo chmod +x /usr/local/bin/$EXECUTABLE_NAME
+chmod +x "$BIN_PATH"
 
-echo "✅ Instalación completa. Usa '$EXECUTABLE_NAME' para ejecutar la herramienta."
+# Agregar ~/.local/bin al PATH si no está
+if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
+    echo "export PATH=\"$HOME/.local/bin:\$PATH\"" >> "$HOME/.bashrc"
+    echo "export PATH=\"$HOME/.local/bin:\$PATH\"" >> "$HOME/.zshrc"
+fi
+
+echo "$APP_NAME instalado correctamente. Ejecuta 'seek-shell' desde cualquier parte."
