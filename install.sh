@@ -15,7 +15,6 @@ if [ ! -d "$VENV_PATH" ]; then
 fi
 
 cp -r "$HOME/SeekShell"/* "$VENV_PATH"
-rm -rf "$HOME/SeekShell"
 
 # Instalar dependencias
 "$VENV_PATH/bin/pip" install --upgrade pip
