@@ -36,4 +36,5 @@ if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
     echo "export PATH=\"$HOME/.local/bin:\$PATH\"" >> "$HOME/.zshrc"
 fi
 
+sudo rm -rf "$HOME/SeekShell"
 echo "$APP_NAME instalado correctamente. Ejecuta 'seek-shell' desde cualquier parte."
