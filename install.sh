@@ -24,7 +24,7 @@ cp -r "$HOME/SeekShell"/* "$VENV_PATH"
 mkdir -p "$HOME/.local/bin"
 cat << EOF > "$BIN_PATH"
 #!/bin/bash
-$VENV_PATH/bin/python $VENV_PATH/seek_shell/main.py "$@"
+$VENV_PATH/bin/python $VENV_PATH/seek_shell/main.py "\$@"
 EOF
 
 # Dar permisos de ejecución
